@@ -14,12 +14,12 @@ struct TrieNode {
     int length;
     char *category;
     char *riskLevel;
-    BSTNode *next;
+    struct BSTNode *next;
 };
 
 void buildDictionary(TrieNode **root);
 TrieNode *createBranch(char* name, char* definition);
-void addDictionary(TrieNode **root, char *name, char *definition);
+void addDictionary(TrieNode **root, char *name, char *definition, char *riskLevel);
 char *searchDictionary(TrieNode **root, char *name);
 
 #ifdef __cplusplus

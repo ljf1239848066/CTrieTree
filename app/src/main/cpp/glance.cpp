@@ -20,18 +20,20 @@ JNIEXPORT void JNICALL
 a(JNIEnv *env, jclass clazz, jobject context) {
 //    LOGI("[+] init start");
     PLOGI("[+] i s");
-//    TrieNode *root = NULL;
-//    buildDictionary(&root);
-//    addDictionary(&root, "百度", "哈哈");
-//    addDictionary(&root, "家", "哈哈");
-//    addDictionary(&root, "家家", "哈哈");
-//    addDictionary(&root, "高科技", "哈哈");
-//    addDictionary(&root, "技公", "哈哈");
-//    addDictionary(&root, "科技", "哈哈");
-//    addDictionary(&root, "科技公司", "哈哈");
-
-//    char *rst = searchDictionary(&root, "百度是家高科技公司");
-//    PLOGI("[+] i s search rst:%s", rst);
+    TrieNode *root = NULL;
+    buildDictionary(&root);
+    PLOGI("[+] i s 1");
+    addDictionary(&root, "百度", "哈哈", "");
+    PLOGI("[+] i s 2");
+    addDictionary(&root, "家", "哈哈", "");
+    addDictionary(&root, "家家", "哈哈", "");
+    addDictionary(&root, "高科技", "哈哈", "");
+    addDictionary(&root, "技公", "哈哈", "");
+    addDictionary(&root, "科技", "哈哈", "");
+    addDictionary(&root, "科技公司", "哈哈", "");
+    PLOGI("[+] i s 3");
+    char *rst = searchDictionary(&root, "百度是家高科技公司");
+    PLOGI("[+] i s search rst:%s", rst);
 }
 
 JNIEXPORT void JNICALL

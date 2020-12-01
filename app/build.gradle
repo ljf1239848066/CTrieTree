@@ -37,10 +37,6 @@ android {
             path 'src/main/cpp/CMakeLists.txt'
             version '3.10.2'
         }
-        // CI 构建使用，编译生成混淆 so
-        ndkBuild {
-//            path = 'src/main/cpp/Android.mk'
-        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

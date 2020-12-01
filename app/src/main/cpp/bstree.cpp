@@ -1,30 +1,33 @@
-
 #include "bstree.h"
 
+void CreateBSTree(struct BSTNode **ppBst) {
+    *ppBst = (struct BSTNode *)malloc(sizeof(struct BSTNode));
+}
+
 void InsertBSTree(struct BSTNode *pRoot, char value) {
-    struct BSTNode *pRootBak = pRoot;//记录根节点地址
     struct BSTNode *pNew = (struct BSTNode *) malloc(sizeof(struct BSTNode));
     if (NULL == pNew) {
         return;
     }
     pNew->data = value;
     pNew->pLchild = pNew->pRchild = NULL;
-    struct BSTNode *pTmp = NULL;
     struct BSTNode *pCur = pRoot;
-    while (NULL != pCur) {
-        pTmp = pCur;
-        if (pNew->data < pCur->data) {
-            pCur = pCur->pLchild;
+    while (true) {
+        if (value < pCur->data) {
+            if(pCur->pLchild) {
+                pCur = pCur->pLchild;
+            } else {
+                pCur->pLchild = pNew;
+                break;
+            }
         } else {
-            pCur = pCur->pRchild;
+            if(pCur->pRchild) {
+                pCur = pCur->pRchild;
+            } else {
+                pCur->pRchild = pNew;
+                break;
+            }
         }
-    }
-    if (NULL == pTmp) {//当树为空时，将插入节点的地址赋给根节点
-        *pRootBak = *pNew;
-    } else if (pNew->data <= pTmp->data) {
-        pTmp->pLchild = pNew;
-    } else {
-        pTmp->pRchild = pNew;
     }
 }
 

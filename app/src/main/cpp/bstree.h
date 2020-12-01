@@ -5,19 +5,23 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <stdbool.h>
+#include "trietree.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-struct BSTNode
-{
+typedef struct BSTNode BSTNode;
+
+struct BSTNode {
     char data;
     struct BSTNode *pLchild;
     struct BSTNode *pRchild;
+    struct TrieNode *pNext;
 };
 
-void InsertBSTree(struct BSTNode *pBST, int InsertVal);
+void CreateBSTree(struct BSTNode **ppBst);
+void InsertBSTree(struct BSTNode *pBST, char value);
 struct BSTNode *SearchBSTree(struct BSTNode *pBST, char key);
 
 #ifdef __cplusplus
