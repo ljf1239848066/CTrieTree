@@ -1,48 +1,21 @@
-package com.lxzh123.ctrietree;
+package com.lxzh123.ctrietree.base;
 
-public class BSTree {
-    public static class BSTNode {
-        char data;
-        BSTNode left;
-        BSTNode right;
-        TrieTree.TrieNode node;
-
-        public BSTNode(char data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-            this.node = null;
-        }
-
-        public boolean hasLeft() {
-            return this.left != null;
-        }
-
-        public boolean hasRight() {
-            return this.right != null;
-        }
-
-        @Override
-        public String toString() {
-            return "" + data;
-        }
-    }
-
+public class BSTree<T extends Comparable> implements IContainer<BSTNode, T> {
     BSTNode mRoot;
 
     public BSTree() {
-//        this.mRoot = new BSTNode();
+        this.mRoot = null;
     }
 
-    public BSTNode addNode(char value) {
-        BSTNode node = new BSTNode(value);
+    @Override
+    public BSTNode addItem(BSTNode node) {
         if (mRoot == null) {
             mRoot = node;
             return node;
         }
         BSTNode cur = mRoot;
         while (true) {
-            if (value < cur.data) {
+            if (node.value.compareTo(cur.value) < 0) {
                 if (cur.hasLeft()) {
                     cur = cur.left;
                 } else {
@@ -61,15 +34,17 @@ public class BSTree {
         return node;
     }
 
-    public boolean hasNode(char value) {
+    @Override
+    public boolean hasItem(BSTNode node) {
         if (mRoot == null) {
             return false;
         }
         BSTNode cur = mRoot;
         while (true) {
-            if (value == cur.data) {
+            int c = node.value.compareTo(cur.value);
+            if (c == 0) {
                 return true;
-            } else if (value < cur.data) {
+            } else if (c < 0) {
                 if (cur.hasLeft()) {
                     cur = cur.left;
                 } else {
@@ -85,15 +60,17 @@ public class BSTree {
         }
     }
 
-    public BSTNode findNode(char value) {
+    @Override
+    public BSTNode findItem(T data) {
         if (mRoot == null) {
             return null;
         }
         BSTNode cur = mRoot;
         while (true) {
-            if (value == cur.data) {
+            int c = data.compareTo(cur.value);
+            if (c == 0) {
                 return cur;
-            } else if (value < cur.data) {
+            } else if (c < 0) {
                 if (cur.hasLeft()) {
                     cur = cur.left;
                 } else {
