@@ -21,7 +21,7 @@ struct BSTNode {
 };
 
 void CreateBSTree(struct BSTNode **ppBst);
-void InsertBSTree(struct BSTNode *pBST, char value);
+struct BSTNode *InsertBSTree(struct BSTNode **pBST, struct BSTNode *node);
 struct BSTNode *SearchBSTree(struct BSTNode *pBST, char key);
 
 #ifdef __cplusplus

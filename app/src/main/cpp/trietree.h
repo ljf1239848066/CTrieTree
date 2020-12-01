@@ -17,8 +17,8 @@ struct TrieNode {
     struct BSTNode *next;
 };
 
-void buildDictionary(TrieNode **root);
-TrieNode *createBranch(char* name, char* definition);
+void makeNode(TrieNode **root);
+TrieNode *createNode();
 void addDictionary(TrieNode **root, char *name, char *definition, char *riskLevel);
 char *searchDictionary(TrieNode **root, char *name);
 

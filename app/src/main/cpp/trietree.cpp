@@ -6,18 +6,18 @@
 #include <stdlib.h>
 
 //build dictionary
-void buildDictionary(TrieNode **root) {
-    *root = createBranch(NULL, NULL);
+void makeNode(TrieNode **root) {
+    *root = createNode();
 }
 
 //create node
-TrieNode *createBranch(char *name, char *definition) {
-    TrieNode *branch = NULL; //start create the trie and all value is NULL
-    branch = (TrieNode *) malloc(sizeof(TrieNode)); //let branch hv same size as trie
+TrieNode *createNode() {
+    //start create the trie and all value is NULL
+    TrieNode *branch = (TrieNode *) malloc(sizeof(TrieNode)); //let branch hv same size as trie
     branch->length = 0;
     branch->category = NULL;
     branch->riskLevel = NULL;
-    branch->next = NULL; //nextis for sub tree
+    branch->next = NULL; //next is for sub tree
     return branch;
 }
 
@@ -34,12 +34,18 @@ void addDictionary(TrieNode **root, char *name, char *category, char *riskLevel)
         if (node) {
             current = node->pNext;
         } else {
-            TrieNode* tmpTNode = (TrieNode *)malloc(sizeof(TrieNode));
-            if(!current->next) {
-                BSTNode *tmpBNode = (BSTNode *)malloc(sizeof(BSTNode));
-                current->next = tmpBNode;
-            }
-            InsertBSTree(current->next, ch);
+            TrieNode *tmpTNode = NULL;
+            makeNode(&tmpTNode);
+
+            BSTNode *newNode = NULL;
+            CreateBSTree(&newNode);
+            newNode->data = ch;
+
+//            if(!current->next) {
+//                current->next =
+//            }
+            node = InsertBSTree(&(current->next), newNode);
+            node->pNext = tmpTNode;
             current = tmpTNode;
         }
     }
@@ -83,7 +89,7 @@ char *searchDictionary(TrieNode **root, char *wordSearch) {
                 break;
             }
         }
-        i = i + 1 > end ? i + i : end;
+        i = ((i + 1) > end ? (i + 1) : end);
     }
     return nullptr;
 }

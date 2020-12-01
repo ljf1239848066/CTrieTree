@@ -2,33 +2,36 @@
 
 void CreateBSTree(struct BSTNode **ppBst) {
     *ppBst = (struct BSTNode *)malloc(sizeof(struct BSTNode));
+    (*ppBst)->data = 0;
+    (*ppBst)->pLchild = NULL;
+    (*ppBst)->pRchild = NULL;
+    (*ppBst)->pNext = NULL;
 }
 
-void InsertBSTree(struct BSTNode *pRoot, char value) {
-    struct BSTNode *pNew = (struct BSTNode *) malloc(sizeof(struct BSTNode));
-    if (NULL == pNew) {
-        return;
+struct BSTNode *InsertBSTree(struct BSTNode **pRoot, struct BSTNode *node) {
+    if(*pRoot == NULL) {
+        *pRoot = node;
+        return node;
     }
-    pNew->data = value;
-    pNew->pLchild = pNew->pRchild = NULL;
-    struct BSTNode *pCur = pRoot;
+    struct BSTNode *pCur = *pRoot;
     while (true) {
-        if (value < pCur->data) {
+        if (node->data < pCur->data) {
             if(pCur->pLchild) {
                 pCur = pCur->pLchild;
             } else {
-                pCur->pLchild = pNew;
+                pCur->pLchild = node;
                 break;
             }
         } else {
             if(pCur->pRchild) {
                 pCur = pCur->pRchild;
             } else {
-                pCur->pRchild = pNew;
+                pCur->pRchild = node;
                 break;
             }
         }
     }
+    return node;
 }
 
 struct BSTNode *SearchBSTree(struct BSTNode *pRoot, char key) {

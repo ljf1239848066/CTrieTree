@@ -21,7 +21,7 @@ a(JNIEnv *env, jclass clazz, jobject context) {
 //    LOGI("[+] init start");
     PLOGI("[+] i s");
     TrieNode *root = NULL;
-    buildDictionary(&root);
+    makeNode(&root);
     PLOGI("[+] i s 1");
     addDictionary(&root, "百度", "哈哈", "");
     PLOGI("[+] i s 2");
