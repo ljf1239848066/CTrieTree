@@ -34,7 +34,7 @@ struct BSTNode *InsertBSTree(struct BSTNode **pRoot, struct BSTNode *node) {
     return node;
 }
 
-struct BSTNode *SearchBSTree(struct BSTNode *pRoot, char key) {
+struct BSTNode *SearchBSTree(struct BSTNode *pRoot, jchar key) {
     struct BSTNode *pTmp = pRoot;
     while (NULL != pTmp && key != pTmp->data) {
         if (key < pTmp->data) {

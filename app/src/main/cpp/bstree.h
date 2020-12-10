@@ -6,6 +6,7 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include "trietree.h"
+#include <jni.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,7 +15,7 @@ extern "C" {
 typedef struct BSTNode BSTNode;
 
 struct BSTNode {
-    char data;
+    jchar data;
     struct BSTNode *pLchild;
     struct BSTNode *pRchild;
     struct TrieNode *pNext;
@@ -22,7 +23,7 @@ struct BSTNode {
 
 void CreateBSTree(struct BSTNode **ppBst);
 struct BSTNode *InsertBSTree(struct BSTNode **pBST, struct BSTNode *node);
-struct BSTNode *SearchBSTree(struct BSTNode *pBST, char key);
+struct BSTNode *SearchBSTree(struct BSTNode *pBST, jchar key);
 
 #ifdef __cplusplus
 }
