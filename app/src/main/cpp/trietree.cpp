@@ -114,10 +114,13 @@ void addDictionary(JNIEnv *env, TrieNode **root, const jchar *name, int len, cha
     if (NULL == name) {
         return;
     }
+//    LOGI("[+] addDictionary len：%d", len);
     TrieNode *current = *root;
     for (int i = 0; i < len; i++) {
         jchar ch = name[i];
-        BSTNode *node = current->next ? nullptr : SearchBSTree(current->next, ch);
+//        LOGI("[+] addDictionary i：%d ch:%d", i, ch);
+        BSTNode *node = current->next ? SearchBSTree(current->next, ch) : NULL;
+//        LOGI("[+] addDictionary i：%d node is null:%d", i, node == NULL);
         if (node) {
             current = node->pNext;
         } else {
@@ -151,21 +154,26 @@ addDictionary1(JNIEnv *env, TrieNode **root, const char *name, char *category, c
     free(jnames);
 }
 
-ResultList *searchDictionary(JNIEnv *env, TrieNode **root, const jchar *wordSearch, int jlen) {
+ResultList *searchDictionary(JNIEnv *env, TrieNode *root, const jchar *wordSearch, int jlen) {
     TrieNode *tmp;
     jchar ch;
     int i = 0;
     int end = 0;
     ResultList *resultList = NULL;
+    LOGI("searchDictionary jlen:%d ", jlen);
     while (i < jlen) {
-        tmp = *root;
+        tmp = root;
         jchar *sub = (jchar *) (wordSearch + i);
+        LOGI("searchDictionary i:%d sub:%d", i, *sub);
         for (int j = 0; j < jlen - i; j++) {
             ch = sub[j];
+            LOGI("searchDictionary j:%d ch:%d", j, ch);
             BSTNode *node = SearchBSTree(tmp->next, ch);
+            LOGI("searchDictionary j:%d ch:%d findNode:%d", j, ch, node != NULL);
             if (node) {
                 tmp = node->pNext;
                 if (tmp->length > 0) {
+                    LOGI("searchDictionary j:%d ch:%d tmp->length:%d", j, ch, tmp->length);
                     end = i + tmp->length;
                     jchar *out = nullptr;
                     substring(wordSearch, i, end, &out);
@@ -176,9 +184,6 @@ ResultList *searchDictionary(JNIEnv *env, TrieNode **root, const jchar *wordSear
                     result->end = end;
                     result->category = tmp->category;
                     result->riskLevel = tmp->riskLevel;
-//                    if (resultList == NULL) {
-//                        makeResultList(&resultList);
-//                    }
                     addResult(&resultList, result);
 
                     free(out);
@@ -194,7 +199,7 @@ ResultList *searchDictionary(JNIEnv *env, TrieNode **root, const jchar *wordSear
 }
 
 //search dictionary
-ResultList *searchDictionary1(JNIEnv *env, TrieNode **root, const char *wordSearch) {
+ResultList *searchDictionary1(JNIEnv *env, TrieNode *root, const char *wordSearch) {
     TrieNode *tmp;
     char ch;
     int jlen = 0;

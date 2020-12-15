@@ -62,28 +62,16 @@ public class BSTree<T extends Comparable> implements IContainer<BSTNode, T> {
 
     @Override
     public BSTNode findItem(T data) {
-        if (mRoot == null) {
-            return null;
-        }
         BSTNode cur = mRoot;
-        while (true) {
-            int c = data.compareTo(cur.value);
-            if (c == 0) {
-                return cur;
-            } else if (c < 0) {
-                if (cur.hasLeft()) {
-                    cur = cur.left;
-                } else {
-                    return null;
-                }
+        int cmp;
+        while (cur != null && (cmp = data.compareTo(cur.value)) != 0) {
+            if (cmp < 0) {
+                cur = cur.left;
             } else {
-                if (cur.hasRight()) {
-                    cur = cur.right;
-                } else {
-                    return null;
-                }
+                cur = cur.right;
             }
         }
+        return cur;
     }
 
     @Override

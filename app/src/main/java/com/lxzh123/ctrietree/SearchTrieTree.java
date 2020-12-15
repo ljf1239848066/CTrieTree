@@ -1,5 +1,7 @@
 package com.lxzh123.ctrietree;
 
+import android.util.Log;
+
 import com.lxzh123.ctrietree.base.BSTNode;
 import com.lxzh123.ctrietree.base.BSTree;
 import com.lxzh123.ctrietree.base.TrieNode;
@@ -18,27 +20,27 @@ public class SearchTrieTree extends TrieTree<String, ResultItem> {
 
     @Override
     public void insert(String data) {
-        TrieNode<BSTree<TrieNodeData>> cur = mTRoot;
+        TrieNode<BSTree<TrieNodeData>> current = mTRoot;
         char[] chs = data.toCharArray();
         int len = chs.length;
         for (int i = 0; i < len; i++) {
             char ch = chs[i];
             TrieNodeData nodeData = new TrieNodeData(ch);
-            BSTNode<TrieNodeData> bNode = cur.next == null? null:cur.next.findItem(nodeData);
+            BSTNode<TrieNodeData> bNode = current.next == null ? null : current.next.findItem(nodeData);
             if (bNode != null) {
-                cur = bNode.value.node;
+                current = bNode.value.pNext;
             } else {
-                TrieNode tNode = new TrieNode();
+                TrieNode tmpNode = new TrieNode();
                 BSTNode<TrieNodeData> newNode = new BSTNode<>(nodeData);
-                if(cur.next == null) {
-                    cur.next = new BSTree();
+                if (current.next == null) {
+                    current.next = new BSTree();
                 }
-                bNode = cur.next.addItem(newNode);
-                bNode.value.node = tNode;
-                cur = tNode;
+                bNode = current.next.addItem(newNode);
+                bNode.value.pNext = tmpNode;
+                current = tmpNode;
             }
         }
-        cur.length = len;
+        current.length = len;
     }
 
     @Override
@@ -49,19 +51,24 @@ public class SearchTrieTree extends TrieTree<String, ResultItem> {
         char ch;
         int i = 0;
         int end = 0;
+        Log.d("Geetest_Glance", "searchDictionary jlen:" + len);
         while (i < len) {
             cur = mTRoot;
             List<ResultItem> tmpResult = new ArrayList<>();
             String subStr = content.substring(i);
             int subLen = subStr.length();
             char[] chs = subStr.toCharArray();
+            Log.d("Geetest_Glance", "searchDictionary i:" + i + " sub:" + (int) chs[0] + " " + chs[0]);
             for (int j = 0; j < subLen; j++) {
                 ch = chs[j];
+                Log.d("Geetest_Glance", "searchDictionary j:" + j + " ch:" + (int) ch + " " + ch);
                 TrieNodeData nodeData = new TrieNodeData(ch);
                 BSTNode<TrieNodeData> bNode = cur.next == null ? null : cur.next.findItem(nodeData);
+                Log.d("Geetest_Glance", "searchDictionary j:" + j + " ch:" + ch + " findNode:" + (bNode != null ? 1 : 0));
                 if (bNode != null) {
-                    cur = bNode.value.node;
+                    cur = bNode.value.pNext;
                     if (cur.length > 0) {
+                        Log.d("Geetest_Glance", "searchDictionary j:" + j + " ch:" + ch + " tmp->length:" +  cur.length);
                         end = i + cur.length;
                         tmpResult.add(new ResultItem(content.substring(i, end), i, end));
                     }

@@ -4,7 +4,7 @@ import com.lxzh123.ctrietree.base.TrieNode;
 
 public class TrieNodeData implements Comparable<TrieNodeData> {
     char data;
-    TrieNode node;
+    TrieNode pNext;
 
     public TrieNodeData(char data) {
         this.data = data;

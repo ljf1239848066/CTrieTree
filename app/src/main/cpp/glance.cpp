@@ -32,7 +32,7 @@ a(JNIEnv *env, jclass clazz, jobject context) {
     addDictionary1(env, &root, "科技", "哈哈", "");
     addDictionary1(env, &root, "科技公司", "哈哈", "");
     PLOGI("[+] i s 3");
-    searchDictionary1(env, &root, "百度是家高科技公司");
+    searchDictionary1(env, root, "百度是家高科技公司");
     PLOGI("[+] i s search finished");
 }
 
@@ -58,7 +58,7 @@ ttSearch(JNIEnv *env, jclass clazz, jlong handle, jobject context, jstring conte
     TrieNode *root = (TrieNode *) handle;
     const jchar *jchs = env->GetStringChars(content, NULL);
     int jlen = env->GetStringLength(content);
-    ResultList *resultList = searchDictionary(env, &root, jchs, jlen);
+    ResultList *resultList = searchDictionary(env, root, jchs, jlen);
     if (resultList == NULL) {
         return;
     }
@@ -79,8 +79,8 @@ ttSearch(JNIEnv *env, jclass clazz, jlong handle, jobject context, jstring conte
         int lenCat = strlen(result->category);
         int lenRisk = strlen(result->riskLevel);
         LOGD("ttSearch 3->1 result:%p lenCat:%d lenRisk:%d", result, lenCat, lenRisk);
-        jbyte *tmpCat = (jbyte *)malloc(lenCat);
-        jbyte *tmpRisk = (jbyte *)malloc(lenRisk);
+        jbyte *tmpCat = (jbyte *) malloc(lenCat);
+        jbyte *tmpRisk = (jbyte *) malloc(lenRisk);
         memcpy(tmpCat, result->category, lenCat);
         memcpy(tmpRisk, result->riskLevel, lenRisk);
         jbyteArray category = env->NewByteArray(lenCat);
